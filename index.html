@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="main.css">
+  <title>Note Taker</title>
+</head>
+
+<body>
+  <div class="top-corner-bar">
+    <img src="images/hamburger.svg" alt="hamburger" id="hamburger">
+    <img src="images/brand-logo.svg" alt="brand-logo" id="brand-logo">
+  </div>
+  <aside>
+    <div id="overview">
+      <img src="images/overview-tiles.svg" alt="overview-tiles" class="side-icon">
+      <span class="side-title">Overview</span>
+    </div>
+    <div id="notes" class="section-selected">
+      <img src="images/notes-pen.svg" alt="notes-pen" class="side-icon">
+      <span class="side-title">Notes</span>
+    </div>
+    <div id="tasks">
+      <img src="images/tasks-checks.svg" alt="tasks-checks" class="side-icon"><span class="side-title">Tasks</span>
+    </div>
+    <div id="archives">
+      <img src="images/archives-bin.svg" alt="archives" class="side-icon">
+      <span class="side-title">Archives</span>
+    </div>
+  </aside>
+  <header>
+    <img src="/images/magnify-glass.svg" alt="magnifying-glass" id="search-img">
+    <input id="search-bar" placeholder="Search notes"></input>
+  </header>
+  <div class="tabs">
+    <div class="sections">
+      <div class="tab tab-selected">All</div>
+      <div class="tab">Project</div>
+      <div class="tab">Business</div>
+    </div>
+    <button class="btn-tab-add">+</button>
+    <button class="btn-note-add">Add new note</button>
+  </div>
+  <main>
+    <div class="card">
+      <div class="card-date">July 26, 2019</div>
+      <div class="card-title">Prep Team Meeting</div>
+      <div class="card-content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur ducimus odit facilis
+        nemo molestias rem nam omnis ipsam assumenda modi.</div>
+    </div>
+  </main>
+  <script src="/index.js"></script>
+</body>
+
+</html>
