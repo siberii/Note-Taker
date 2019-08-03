@@ -27,18 +27,60 @@ for (const group of groups) {
 
 
 const cardNote = document.querySelector(".card");
-cardNote.addEventListener("click", (e) => {
-  createNoteEditor(e);
-});
-
 const closeNote = document.querySelector(".btn-close");
-cardNote.addEventListener("mouseover", ()=>{
-  closeNote.classList.add("appear");
-});
-cardNote.addEventListener("mouseout", ()=>{
+handleCardEvents(cardNote, closeNote);
+
+
+function handleCardEvents(cardNote, closeNote) {
+  cardNote.addEventListener("click", (e) => {
+    createNoteEditor(e);
+  });
+  cardNote.addEventListener("mouseover", () => {
+    closeNote.classList.add("appear");
+  });
+  cardNote.addEventListener("mouseout", () => {
     closeNote.classList.remove("appear");
-});
-//TODO: caution and remove card
+  });
+  closeNote.addEventListener("click", (e) => {
+    e.stopPropagation();
+    createCaution(e.target.parentElement.parentElement);
+  });
+}
+
+function createCaution(card) {
+  const caution = document.createElement("div");
+  caution.classList.add("caution");
+
+  const cautionMsg = document.createElement("div");
+  cautionMsg.classList.add("caution-msg");
+  cautionMsg.innerHTML = "Are you sure you want to <b>delete</b> this note?";
+
+  const buttonCaution = document.createElement("div");
+  buttonCaution.classList.add("btn-caution");
+
+  const buttonYes = document.createElement("button");
+  buttonYes.classList.add("btn-caution-yes");
+  buttonYes.innerText = "Yes";
+  buttonYes.addEventListener("click", () => {
+    card.remove();
+    caution.remove();
+  });
+
+  const buttonNo = document.createElement("button");
+  buttonNo.classList.add("btn-caution-no");
+  buttonNo.innerText = "No";
+  buttonNo.addEventListener("click", () => {
+    caution.remove();
+  });
+
+  buttonCaution.appendChild(buttonYes);
+  buttonCaution.appendChild(buttonNo);
+
+  caution.appendChild(cautionMsg);
+  caution.appendChild(buttonCaution);
+
+  document.querySelector("body").appendChild(caution);
+}
 
 function createNoteEditor(e) {
   const target = e.currentTarget || e.srcElement;
@@ -73,7 +115,7 @@ function createNoteEditor(e) {
   overlayNoteCreator.appendChild(noteTitle);
   overlayNoteCreator.appendChild(noteContent);
   overlayNoteCreator.appendChild(buttonCreatorNote);
-  
+
   addBgBlur();
 
   const body = document.querySelector("body");
@@ -144,6 +186,15 @@ function addBgBlur() {
 function createNoteCard() {
   const card = document.createElement("div");
   card.classList.add("card");
+
+  const buttonClose = document.createElement("div");
+  buttonClose.classList.add("card-close");
+  const closeImage = document.createElement("img");
+  closeImage.classList.add("btn-close");
+  closeImage.src = "images/close-btn.svg";
+  closeImage.alt = "close button";
+  buttonClose.appendChild(closeImage);
+
   const date = document.createElement("div");
   date.classList.add("card-date");
   date.innerText = "July 26, 2019";
@@ -155,10 +206,10 @@ function createNoteCard() {
   content.classList.add("card-content");
   const noteContent = document.querySelector(".note-content")
   content.innerText = noteContent.value;
-  card.addEventListener("click", (e) => {
-    createNoteEditor(e);
-  });
 
+  handleCardEvents(card, closeImage);
+
+  card.appendChild(buttonClose);
   card.appendChild(date);
   card.appendChild(title);
   card.appendChild(content);
@@ -184,5 +235,5 @@ function toggleSelectedGroup(section) {
 // Dynamically size textarea
 function autoGrow(element) {
   element.style.height = "1px";
-  element.style.height = (25+element.scrollHeight) + "px";
+  element.style.height = (25 + element.scrollHeight) + "px";
 }

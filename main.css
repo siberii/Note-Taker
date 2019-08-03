@@ -219,7 +219,7 @@ header {
   width: 200px;
   border-radius: 15px;
   outline: none;
-  
+
   transition: 0.3s;
 }
 
@@ -250,7 +250,8 @@ main {
 .card:hover {
   -webkit-box-shadow: 1px 5px 6px 1.3px rgba(0, 0, 0, 0.26);
   -moz-box-shadow: 1px 5px 6px 1.3px rgba(0, 0, 0, 0.26);
-  box-shadow: 1px 5px 6px 1.3px rgba(0, 0, 0, 0.26);;
+  box-shadow: 1px 5px 6px 1.3px rgba(0, 0, 0, 0.26);
+  ;
 }
 
 .card:active {
@@ -276,8 +277,76 @@ main {
   transition: opacity 0.3s ease-in;
 }
 
-.btn-close:hover{
+.btn-close:hover {
   cursor: pointer;
+}
+
+
+.caution {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 38px 36px;
+  border: none;
+  -webkit-box-shadow: 1px 3px 6px 1.3px rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 1px 3px 6px 1.3px rgba(0, 0, 0, 0.13);
+  box-shadow: 1px 3px 6px 1.3px rgba(0, 0, 0, 0.13);
+}
+
+.caution-msg {
+  font-size: 19px;
+}
+
+.btn-caution {
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.btn-caution-yes,
+.btn-caution-no {
+  font-family: "Open Sans", sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  border: none;
+  border-radius: 15px;
+  background-color: #fff;
+  padding: 10px 20px;
+  margin: 30px 20px 0;
+  -webkit-box-shadow: 1px 3px 6px 1.3px rgba(0, 0, 0, 0.13);
+  -moz-box-shadow: 1px 3px 6px 1.3px rgba(0, 0, 0, 0.13);
+  box-shadow: 1px 3px 6px 1.3px rgba(0, 0, 0, 0.13);
+}
+
+.btn-caution-yes {
+  background-color: #614ad3;
+  transition: 0.3s;
+}
+
+.btn-caution-yes:hover {
+  cursor: pointer;
+  background-color: #4937a0;
+}
+
+.btn-caution-yes:active {
+  outline: none;
+}
+
+.btn-caution-no {
+  background-color: #907cf5;
+  transition: 0.3s;
+}
+
+.btn-caution-no:hover {
+  cursor: pointer;
+  background-color: #7464c4;
+}
+
+.btn-caution-no:active {
+  outline: none;
 }
 
 .appear {
