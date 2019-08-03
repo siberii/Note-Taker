@@ -31,6 +31,14 @@ cardNote.addEventListener("click", (e) => {
   createNoteEditor(e);
 });
 
+const closeNote = document.querySelector(".btn-close");
+cardNote.addEventListener("mouseover", ()=>{
+  closeNote.classList.add("appear");
+});
+cardNote.addEventListener("mouseout", ()=>{
+    closeNote.classList.remove("appear");
+});
+//TODO: caution and remove card
 
 function createNoteEditor(e) {
   const target = e.currentTarget || e.srcElement;
@@ -44,7 +52,7 @@ function createNoteEditor(e) {
   noteContent.value = target.querySelector(".card-content").innerText;
   noteContent.placeholder = "Take a note...";
   noteContent.autofocus = true;
-  
+
   noteContent.addEventListener("keydown", () => {
     autoGrow(noteContent);
   });
@@ -56,17 +64,29 @@ function createNoteEditor(e) {
     target.querySelector(".card-title").innerText = noteTitle.value;
     target.querySelector(".card-content").innerText = noteContent.value;
     document.querySelector(".overlay-note-creator").remove();
+    removeBgBlur();
     target.scrollIntoView();
   });
+
   const overlayNoteCreator = document.createElement("div");
   overlayNoteCreator.classList.add("overlay-note-creator");
   overlayNoteCreator.appendChild(noteTitle);
   overlayNoteCreator.appendChild(noteContent);
   overlayNoteCreator.appendChild(buttonCreatorNote);
+  
+  addBgBlur();
+
   const body = document.querySelector("body");
   body.appendChild(overlayNoteCreator);
 
   autoGrow(noteContent);
+}
+
+function removeBgBlur() {
+  document.querySelector(".bg-blur").classList.add("bg-blur-gone");
+  setTimeout(() => {
+    document.querySelector(".bg-blur").classList.remove("bg-blur-front");
+  }, 200);
 }
 
 function createTab() {
@@ -90,13 +110,17 @@ function createNoteCreator() {
   noteContent.classList.add("note-content");
   noteContent.placeholder = "Take a note...";
   noteContent.autofocus = true;
-  noteContent
+
+  noteContent.addEventListener("keydown", () => {
+    autoGrow(noteContent);
+  });
 
   const buttonCreatorNote = document.createElement("button");
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Add new note";
   buttonCreatorNote.addEventListener("click", () => {
     createNoteCard();
+    removeBgBlur();
   });
 
   const overlayNoteCreator = document.createElement("div");
@@ -105,8 +129,16 @@ function createNoteCreator() {
   overlayNoteCreator.appendChild(noteContent);
   overlayNoteCreator.appendChild(buttonCreatorNote);
 
+  addBgBlur();
+
   const body = document.querySelector("body");
   body.appendChild(overlayNoteCreator);
+}
+
+function addBgBlur() {
+  const bgBlur = document.querySelector(".bg-blur");
+  bgBlur.classList.remove("bg-blur-gone");
+  bgBlur.classList.add("bg-blur-front");
 }
 
 function createNoteCard() {
@@ -123,7 +155,6 @@ function createNoteCard() {
   content.classList.add("card-content");
   const noteContent = document.querySelector(".note-content")
   content.innerText = noteContent.value;
-
   card.addEventListener("click", (e) => {
     createNoteEditor(e);
   });
@@ -152,8 +183,6 @@ function toggleSelectedGroup(section) {
 
 // Dynamically size textarea
 function autoGrow(element) {
-  console.log(element + " auto_grow activated!");
-  
   element.style.height = "1px";
-  element.style.height = (25+element.scrollHeight)+"px";
+  element.style.height = (25+element.scrollHeight) + "px";
 }
