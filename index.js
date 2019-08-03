@@ -28,10 +28,10 @@ for (const group of groups) {
 
 const cardNote = document.querySelector(".card");
 const closeNote = document.querySelector(".btn-close");
-handleCardEvents(cardNote, closeNote);
+listenCardEvents(cardNote, closeNote);
 
 
-function handleCardEvents(cardNote, closeNote) {
+function listenCardEvents(cardNote, closeNote) {
   cardNote.addEventListener("click", (e) => {
     createNoteEditor(e);
   });
@@ -64,6 +64,7 @@ function createCaution(card) {
   buttonYes.addEventListener("click", () => {
     card.remove();
     caution.remove();
+    removeBgBlur();
   });
 
   const buttonNo = document.createElement("button");
@@ -71,6 +72,7 @@ function createCaution(card) {
   buttonNo.innerText = "No";
   buttonNo.addEventListener("click", () => {
     caution.remove();
+    removeBgBlur();
   });
 
   buttonCaution.appendChild(buttonYes);
@@ -78,6 +80,8 @@ function createCaution(card) {
 
   caution.appendChild(cautionMsg);
   caution.appendChild(buttonCaution);
+
+  addBgBlur();
 
   document.querySelector("body").appendChild(caution);
 }
@@ -99,6 +103,9 @@ function createNoteEditor(e) {
     autoGrow(noteContent);
   });
 
+  const buttons = document.createElement("div");
+  buttons.classList.add("overlay-buttons");
+
   const buttonCreatorNote = document.createElement("button");
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Save";
@@ -110,11 +117,24 @@ function createNoteEditor(e) {
     target.scrollIntoView();
   });
 
+  const buttonCancel = document.createElement("button");
+  buttonCancel.classList.add("btn-creator-cancel");
+  buttonCancel.innerText = "Cancel";
+  buttonCancel.addEventListener("click", () => {
+    document.querySelector(".overlay-note-creator").remove();
+    removeBgBlur();
+    target.scrollIntoView();
+  });
+
+  buttons.appendChild(buttonCreatorNote);
+  buttons.appendChild(buttonCancel);
+
+
   const overlayNoteCreator = document.createElement("div");
   overlayNoteCreator.classList.add("overlay-note-creator");
   overlayNoteCreator.appendChild(noteTitle);
   overlayNoteCreator.appendChild(noteContent);
-  overlayNoteCreator.appendChild(buttonCreatorNote);
+  overlayNoteCreator.appendChild(buttons);
 
   addBgBlur();
 
@@ -157,24 +177,47 @@ function createNoteCreator() {
     autoGrow(noteContent);
   });
 
+  const buttons = document.createElement("div");
+  buttons.classList.add("overlay-buttons");
+
+
   const buttonCreatorNote = document.createElement("button");
   buttonCreatorNote.classList.add("btn-creator-add-note");
-  buttonCreatorNote.innerText = "Add new note";
-  buttonCreatorNote.addEventListener("click", () => {
-    createNoteCard();
-    removeBgBlur();
-  });
+  buttonCreatorNote.innerText = "Add note";
+ 
+
+  const buttonCancel = document.createElement("button");
+  buttonCancel.classList.add("btn-creator-cancel");
+  buttonCancel.innerText = "Cancel";
+
+  listenAddCancelButton(buttonCreatorNote, buttonCancel);
+
+  buttons.appendChild(buttonCreatorNote);
+  buttons.appendChild(buttonCancel);
+
 
   const overlayNoteCreator = document.createElement("div");
   overlayNoteCreator.classList.add("overlay-note-creator");
   overlayNoteCreator.appendChild(noteTitle);
   overlayNoteCreator.appendChild(noteContent);
-  overlayNoteCreator.appendChild(buttonCreatorNote);
+  overlayNoteCreator.appendChild(buttons);
 
   addBgBlur();
 
   const body = document.querySelector("body");
   body.appendChild(overlayNoteCreator);
+}
+
+function listenAddCancelButton(buttonCreatorNote, buttonCancel) {
+  buttonCreatorNote.addEventListener("click", () => {
+    createNoteCard();
+    removeBgBlur();
+  });
+  buttonCancel.addEventListener("click", () => {
+    document.querySelector(".overlay-note-creator").remove();
+    removeBgBlur();
+    card.scrollIntoView();
+  });
 }
 
 function addBgBlur() {
@@ -207,7 +250,7 @@ function createNoteCard() {
   const noteContent = document.querySelector(".note-content")
   content.innerText = noteContent.value;
 
-  handleCardEvents(card, closeImage);
+  listenCardEvents(card, closeImage);
 
   card.appendChild(buttonClose);
   card.appendChild(date);
