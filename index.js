@@ -51,10 +51,10 @@ function toogleSidebar() {
     const body = document.querySelector("body");
     body.classList.add("shrink-sidebar");
     const brandLogo = document.querySelector(".brand-logo");
-    brandLogo.style.visibility = "hidden";
+    brandLogo.style.display = "none";
     const sideTitles = document.querySelectorAll(".side-title");
     for (const sideTitle of sideTitles) {
-      sideTitle.style.visibility = "hidden";
+      sideTitle.style.display = "none";
     }
   }
 
@@ -62,10 +62,10 @@ function toogleSidebar() {
     const body = document.querySelector("body");
     body.classList.remove("shrink-sidebar");
     const brandLogo = document.querySelector(".brand-logo");
-    brandLogo.style.visibility = "visible";
+    brandLogo.style.display = "block";
     const sideTitles = document.querySelectorAll(".side-title");
     for (const sideTitle of sideTitles) {
-      sideTitle.style.visibility = "visible";
+      sideTitle.style.display = "block";
     }
   }
 }
