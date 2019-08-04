@@ -18,8 +18,8 @@ body {
   background-color: #f2f4f6;
   margin: 0;
   display: grid;
-  grid-template-columns: 21% 23% auto auto 23%;
-  grid-template-rows: 8.5% auto 1fr 1fr 1fr;
+  grid-template-columns: 20% 23% auto auto 23%;
+  grid-template-rows: 8.1% auto 1fr 1fr 1fr;
   grid-template-areas:
     "top-corner-bar  header  header  header  header"
     "sidebar         tabs    tabs    tabs    tabs"
@@ -28,19 +28,36 @@ body {
     "sidebar         main    main    main    main";
 }
 
+.shrink-sidebar {
+  grid-template-columns: 5.8% 23% auto auto auto 23%;
+  grid-template-areas:
+    "top-corner-bar  header  header  header  header  header"
+    "sidebar         tabs    tabs    tabs    tabs    tabs"
+    "sidebar         main    main    main    main    main"
+    "sidebar         main    main    main    main    main"
+    "sidebar         main    main    main    main    main";
+}
+
 .top-corner-bar {
   grid-area: top-corner-bar;
   background-color: #121b74;
-  padding: 21px 42px 0px 42px;
   -webkit-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   -moz-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   z-index: 1;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  max-height: 79.3px;
 }
 
 #hamburger {
-  margin: 0px 36px 0px 0px;
   cursor: pointer;
+  display: block;
+}
+
+.brand-logo {
+  margin: 0px 22px 3px;
 }
 
 aside {
@@ -48,7 +65,9 @@ aside {
   background-color: #2d248a;
 }
 
+
 aside>div {
+  max-height: 79.3px;
   padding: 24px 10px;
   transition: 0.3s;
 }
@@ -60,25 +79,19 @@ aside>div:hover {
 
 .side-title {
   color: #fff;
-  font-size: 20px;
-  vertical-align: bottom;
-  line-height: 35px;
+  font-size: 18px;
+  margin: 1px 10px;
 }
 
-.side-icon {
-  margin: 0px 40px;
+.side-icon,
+#hamburger {
+  margin: 1px 25px;
 }
 
-#overview>.side-title {
-  margin-left: 3px;
-}
-
-#tasks>.side-title {
-  margin-left: 9px;
-}
-
-#archives>.side-title {
-  margin-left: 3px;
+.group {
+  display: flex;
+  align-content: center;
+  align-content: center;
 }
 
 .group-selected {
@@ -94,7 +107,7 @@ aside>div:hover {
 header {
   grid-area: header;
   background-color: #fff;
-  padding: 21px 63px;
+  padding: 21px 49px;
   -webkit-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   -moz-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
@@ -102,12 +115,11 @@ header {
 
 #search-img {
   margin-right: 15px;
-  margin-top: 10px;
 }
 
 #search-bar {
   color: #575656;
-  font-size: 20px;
+  font-size: 18px;
   vertical-align: bottom;
   line-height: 34px;
   border: none;
@@ -132,7 +144,7 @@ header {
 }
 
 .sections {
-  font-size: 19px;
+  font-size: 18px;
   grid-area: tabs;
   background-color: #f2f4f6;
   display: flex;
@@ -145,7 +157,6 @@ header {
 }
 
 .tabs {
-  font-size: 19px;
   grid-area: tabs;
   background-color: #f2f4f6;
   display: flex;
@@ -156,7 +167,7 @@ header {
 
 .tab-selected {
   letter-spacing: 0.2px;
-  /* font-weight: bold; */
+  font-weight: bold;
   color: #fff;
   background-color: #614ad3;
   border: 1px none;
@@ -184,10 +195,6 @@ header {
 }
 
 .btn-tab-add {
-  font-size: 29px;
-  text-align: center;
-  /* vertical-align: bottom; */
-  /* line-height: 10px; */
   padding: 9px 9px;
   color: #fff;
   border: 1px none;
@@ -212,15 +219,16 @@ header {
 .btn-note-add {
   margin-left: auto;
   font-weight: bold;
-  font-size: 21px;
+  font-size: 20px;
   color: #fff;
   border: 1px none;
   background-color: #e42c64;
   height: auto;
   width: auto;
-  padding: 16px 30px;
+  padding: 12px 26px;
   border-radius: 5px;
   outline: none;
+  white-space: nowrap;
 
   transition: 0.3s;
 }
@@ -229,7 +237,6 @@ header {
   background-color: #b62450;
   cursor: pointer;
 }
-
 
 main {
   grid-area: main;
@@ -242,12 +249,18 @@ main {
   margin-bottom: 20px;
 }
 
+.increase-columns {
+  grid-template-columns: repeat(5, 1fr);
+}
+
 .card {
   border: none;
   border-radius: 5px;
   background-color: #fff;
   padding: 16px 38px 28px;
   transition: 0.3s;
+  max-height: 270px;
+  max-width: 310px;
 }
 
 .card:hover {
@@ -381,7 +394,7 @@ main {
 
 .card-content {
   display: -webkit-box;
-  -webkit-line-clamp: 6;
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   max-width: 300px;
   text-align: justify;
@@ -389,6 +402,7 @@ main {
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
+  cursor: default;
 
 }
 
@@ -559,9 +573,10 @@ textarea {
 .btn-note-add:active,
 .btn-tab-add:active,
 .btn-creator-add-note:active,
-.btn-creator-cancel:active ,
-.btn-caution-yes:active ,
+.btn-creator-cancel:active,
+.btn-caution-yes:active,
 .btn-caution-no:active {
   transform: translateY(5%);
-  cursor: pointer;
+  cursor: pointer
+
 }

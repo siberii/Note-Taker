@@ -31,6 +31,45 @@ const closeNote = document.querySelector(".btn-close");
 listenCardEvents(cardNote, closeNote);
 
 
+const hamburger = document.querySelector("#hamburger");
+let isShrunk = false;
+hamburger.addEventListener("click", () => {
+  toogleSidebar();
+});
+
+
+function toogleSidebar() {
+  if (!isShrunk) {
+    skrinkSidebar();
+    isShrunk = true;
+  } else {
+    expandSidebar();
+    isShrunk = false;
+  }
+
+  function skrinkSidebar() {
+    const body = document.querySelector("body");
+    body.classList.add("shrink-sidebar");
+    const brandLogo = document.querySelector(".brand-logo");
+    brandLogo.style.visibility = "hidden";
+    const sideTitles = document.querySelectorAll(".side-title");
+    for (const sideTitle of sideTitles) {
+      sideTitle.style.visibility = "hidden";
+    }
+  }
+
+  function expandSidebar() {
+    const body = document.querySelector("body");
+    body.classList.remove("shrink-sidebar");
+    const brandLogo = document.querySelector(".brand-logo");
+    brandLogo.style.visibility = "visible";
+    const sideTitles = document.querySelectorAll(".side-title");
+    for (const sideTitle of sideTitles) {
+      sideTitle.style.visibility = "visible";
+    }
+  }
+}
+
 function listenCardEvents(cardNote, closeNote) {
   cardNote.addEventListener("click", (e) => {
     createNoteEditor(e);
@@ -184,7 +223,7 @@ function createNoteCreator() {
   const buttonCreatorNote = document.createElement("button");
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Add note";
- 
+
 
   const buttonCancel = document.createElement("button");
   buttonCancel.classList.add("btn-creator-cancel");
