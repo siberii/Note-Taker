@@ -216,7 +216,6 @@ function listenAddCancelButton(buttonCreatorNote, buttonCancel) {
   buttonCancel.addEventListener("click", () => {
     document.querySelector(".overlay-note-creator").remove();
     removeBgBlur();
-    card.scrollIntoView();
   });
 }
 

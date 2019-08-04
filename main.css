@@ -119,16 +119,16 @@ header {
 
 ::-webkit-input-placeholder {
   /* Edge */
-  color: #575656;
+  color: #3d3c3c;
 }
 
 :-ms-input-placeholder {
   /* Internet Explorer 10-11 */
-  color: #575656;
+  color: #3d3c3c;
 }
 
 ::placeholder {
-  color: #575656;
+  color: #3d3c3c;
 }
 
 .sections {
@@ -138,9 +138,10 @@ header {
   display: flex;
   align-content: center;
   align-items: center;
-  height: 80px;
-  margin: 10px 0;
+  height: auto;
+  margin: 0;
   overflow: hidden;
+  transform: translateX(-13px);
 }
 
 .tabs {
@@ -150,7 +151,7 @@ header {
   display: flex;
   align-content: center;
   align-items: center;
-  margin: 10px 33px;
+  margin: 41px 46px 15px 33px;
 }
 
 .tab-selected {
@@ -182,18 +183,12 @@ header {
   cursor: pointer;
 }
 
-.editable {
-  -webkit-user-modify: read-write;
-  -moz-user-modify: read-write;
-  user-modify: read-write;
-}
-
 .btn-tab-add {
   font-size: 29px;
   text-align: center;
   /* vertical-align: bottom; */
   /* line-height: 10px; */
-  padding: 0px 8px;
+  padding: 9px 9px;
   color: #fff;
   border: 1px none;
   background-color: #9f8bff;
@@ -202,6 +197,11 @@ header {
   border-radius: 5px;
   outline: none;
   transition: 0.3s;
+}
+
+.btn-tab-add img {
+  display: block;
+  margin: 0;
 }
 
 .btn-tab-add:hover {
@@ -237,7 +237,7 @@ main {
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 39%;
   grid-gap: 21px;
-  padding: 10px 25px 20px 63px;
+  padding: 10px 46px 20px 50px;
   overflow: auto;
   margin-bottom: 20px;
 }
@@ -388,6 +388,8 @@ main {
   line-height: 25px;
   overflow: hidden;
   text-overflow: ellipsis;
+  word-break: break-all;
+
 }
 
 /* width */
@@ -454,6 +456,7 @@ main {
   border: 1px none #6b6868;
   border-radius: 5px;
   width: 100%;
+  word-break: break-all;
 }
 
 .note-title {
@@ -559,6 +562,6 @@ textarea {
 .btn-creator-cancel:active ,
 .btn-caution-yes:active ,
 .btn-caution-no:active {
-  transform: translateY(4%);
+  transform: translateY(5%);
   cursor: pointer;
 }
