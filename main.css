@@ -10,8 +10,7 @@ body,
 html {
   height: 100vh;
   font-family: "Open Sans", sans-serif;
-  background: #f2f4f6 url("images/bg.svg") no-repeat bottom right;
-
+  overflow: hidden;
 }
 
 body {
@@ -21,34 +20,37 @@ body {
   grid-template-columns: 20% 23% auto auto 23%;
   grid-template-rows: 8.1% auto 1fr 1fr 1fr;
   grid-template-areas:
-    "top-corner-bar  header  header  header  header"
-    "sidebar         tabs    tabs    tabs    tabs"
-    "sidebar         main    main    main    main"
-    "sidebar         main    main    main    main"
-    "sidebar         main    main    main    main";
+    "sidebar  header  header  header  header"
+    "sidebar  tabs    tabs    tabs    tabs"
+    "sidebar  main    main    main    main"
+    "sidebar  main    main    main    main"
+    "sidebar  main    main    main    main";
+  transition: all 1s;
 }
 
 .shrink-sidebar {
   grid-template-columns: 5.8% 23% auto auto auto 23%;
   grid-template-areas:
-    "top-corner-bar  header  header  header  header  header"
-    "sidebar         tabs    tabs    tabs    tabs    tabs"
-    "sidebar         main    main    main    main    main"
-    "sidebar         main    main    main    main    main"
-    "sidebar         main    main    main    main    main";
+    "sidebar  header  header  header  header  header"
+    "sidebar  tabs    tabs    tabs    tabs    tabs"
+    "sidebar  main    main    main    main    main"
+    "sidebar  main    main    main    main    main"
+    "sidebar  main    main    main    main    main";
 }
 
 .top-corner-bar {
-  grid-area: top-corner-bar;
   background-color: #121b74;
+
   -webkit-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   -moz-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
-  box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
-  z-index: 1;
+  box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.1);
+
   display: flex;
   text-align: center;
   align-items: center;
+
   max-height: 79.3px;
+  padding: 22px 0;
 }
 
 #hamburger {
@@ -63,6 +65,7 @@ body {
 aside {
   grid-area: sidebar;
   background-color: #2d248a;
+  transition: 0.5s;
 }
 
 
@@ -72,7 +75,7 @@ aside>div {
   transition: 0.3s;
 }
 
-aside>div:hover {
+.group:hover {
   background-color: #281f88;
   cursor: pointer;
 }
@@ -80,7 +83,7 @@ aside>div:hover {
 .side-title {
   color: #fff;
   font-size: 18px;
-  margin: 1px 10px;
+  margin: 1px 11px;
 }
 
 .side-icon,
@@ -104,6 +107,13 @@ aside>div:hover {
   cursor: pointer;
 }
 
+.left-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: width 1s ease-in;
+}
+
 header {
   grid-area: header;
   background-color: #fff;
@@ -111,6 +121,7 @@ header {
   -webkit-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   -moz-box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
   box-shadow: 0px 6px 10px 3px rgba(0, 0, 0, 0.025);
+  z-index: 1;
 }
 
 #search-img {
@@ -163,6 +174,7 @@ header {
   align-content: center;
   align-items: center;
   margin: 41px 46px 15px 33px;
+  z-index: 1;
 }
 
 .tab-selected {
@@ -217,6 +229,10 @@ header {
 }
 
 .btn-note-add {
+  z-index: 1;
+  position: absolute;
+  top: 12%;
+  right: 3%;
   margin-left: auto;
   font-weight: bold;
   font-size: 20px;
@@ -229,7 +245,6 @@ header {
   border-radius: 5px;
   outline: none;
   white-space: nowrap;
-
   transition: 0.3s;
 }
 
@@ -247,7 +262,55 @@ main {
   padding: 10px 46px 20px 50px;
   overflow: auto;
   margin-bottom: 20px;
+  z-index: 1;
 }
+
+/* sidebar collpse */
+header,
+.tabs,
+main,
+.bg {
+  transition: all 0.3s ease-in;
+}
+
+header {
+  width: 1820px;
+}
+
+.tabs {
+  width: 1443px;
+}
+
+main {
+  width: 1532px;
+}
+
+.bg {
+  border: 1px NONE #f2f4f6;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-37.5%, -50%);
+  background-color: #f2f4f6;
+  
+  height: 100vh;
+  width: 1530px;
+  /* z-index: -1; */
+  pointer-events: none;
+
+  
+}
+
+.bg-image{
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+  background: url("images/bg.svg") no-repeat bottom right;
+  z-index: 0;
+  pointer-events: none;
+}
+/* end of sidebar collapse */
+
 
 .increase-columns {
   grid-template-columns: repeat(5, 1fr);
@@ -259,8 +322,8 @@ main {
   background-color: #fff;
   padding: 16px 38px 28px;
   transition: 0.3s;
-  max-height: 270px;
-  max-width: 310px;
+  /* max-height: 270px; */
+  z-index: 1;
 }
 
 .card:hover {
@@ -403,7 +466,6 @@ main {
   text-overflow: ellipsis;
   word-break: break-all;
   cursor: default;
-
 }
 
 /* width */
@@ -578,5 +640,4 @@ textarea {
 .btn-caution-no:active {
   transform: translateY(5%);
   cursor: pointer
-
 }

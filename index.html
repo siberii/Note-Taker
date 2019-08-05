@@ -10,11 +10,13 @@
 </head>
 
 <body>
-  <div class="top-corner-bar">
-    <img src="images/hamburger.svg" alt="hamburger" id="hamburger">
-    <img src="images/brand-logo-2.svg" alt="brand-logo" class="brand-logo">
-  </div>
-  <aside>
+  <aside class="left-wrapper">
+    <div class="top-corner-bar">
+      <img src="images/hamburger.svg" alt="hamburger" id="hamburger">
+      <a href="#">
+        <img src="images/brand-logo-2.svg" alt="brand-logo" class="brand-logo">
+      </a>
+    </div>
     <div id="overview" class="group">
       <img src="images/overview-tiles.svg" alt="overview-tiles" class="side-icon">
       <span class="side-title">Overview</span>
@@ -35,6 +37,7 @@
     <img src="images/magnify-glass.svg" alt="magnifying-glass" id="search-img">
     <input id="search-bar" placeholder="Search notes"></input>
   </header>
+  <div class="bg"></div>
   <div class="tabs">
     <div class="sections">
       <div class="tab tab-selected">All</div>
@@ -42,8 +45,10 @@
       <div class="tab">Business</div>
     </div>
     <button class="btn-tab-add"><img src="images/plus-icon-rounded.svg" alt="plus icon"></button>
-    <button class="btn-note-add">Add Note</button>
   </div>
+  <button class="btn-note-add">Add Note</button>
+  <div class="bg-image"></div>
+
   <main>
     <div class="card">
       <div class="card-close"><img src="images/close-btn.svg" alt="close button" class="btn-close"></div>
@@ -54,6 +59,7 @@
         exercitationem illum corrupti dolore.</div>
     </div>
   </main>
+
 
   <!-- <div class="overlay-note-creator">
     <input class="note-title" placeholder="Title"></input>

@@ -48,25 +48,52 @@ function toogleSidebar() {
   }
 
   function skrinkSidebar() {
-    const body = document.querySelector("body");
-    body.classList.add("shrink-sidebar");
-    const brandLogo = document.querySelector(".brand-logo");
-    brandLogo.style.display = "none";
-    const sideTitles = document.querySelectorAll(".side-title");
-    for (const sideTitle of sideTitles) {
-      sideTitle.style.display = "none";
-    }
+    const main = document.querySelector("main");
+    main.classList.add("increase-columns");
+    
+    const background = document.querySelector(".bg");
+    const tabs = document.querySelector(".tabs");
+    const header = document.querySelector("header");
+
+
+    main.style.width = "1820px";
+    tabs.style.width = "1729px";
+    header.style.width = "1820px";
+
+    const gap = -286;
+    main.style.transform = "translateX(" + gap + "px)";
+    tabs.style.transform = "translateX(" + gap + "px)";
+    const headerOffset = gap + 2;
+    header.style.transform = "translateX(" + headerOffset + "px)";
+
+    const initialX = -37.5;
+    const bgY = -50;
+    background.style.transform = `translate( calc(${initialX}% + ${gap}px),${bgY}%)`;
+
   }
 
   function expandSidebar() {
-    const body = document.querySelector("body");
-    body.classList.remove("shrink-sidebar");
-    const brandLogo = document.querySelector(".brand-logo");
-    brandLogo.style.display = "block";
-    const sideTitles = document.querySelectorAll(".side-title");
-    for (const sideTitle of sideTitles) {
-      sideTitle.style.display = "block";
-    }
+    const main = document.querySelector("main");
+    main.classList.remove("increase-columns");
+
+    document.querySelector(".left-wrapper").style.width = "auto";
+    const background = document.querySelector(".bg");
+    const tabs = document.querySelector(".tabs");
+    const header = document.querySelector("header");
+
+
+    main.style.width = "1532px";
+    tabs.style.width = "1443px";
+    header.style.width = "1820px";
+    
+    // TODO FIX SIDE SCROLL AND AWK JERK AND RESIZING
+    main.style.transform = "translateX(" + (0) + "px)";
+    tabs.style.transform = "translateX(" + (0) + "px)";
+    header.style.transform = "translateX(" + (0) + "px)";
+    const initialX = -37.5;
+    const bgY = -50;
+
+    background.style.transform = `translate( calc(${initialX}%),${bgY}%)`;
   }
 }
 
