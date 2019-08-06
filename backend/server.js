@@ -20,13 +20,18 @@ app.use(
 );
 
 app.use(express.static(path.resolve("../frontend")));
+app.use("/category",express.static(path.resolve("../frontend")));
 
 mongoose.connect("mongodb://localhost:27017/notetakerDB", {
   useNewUrlParser: true
 });
 
 app.get("/", (req, res) => {
-  res.render(path.resolve(__dirname + "/../frontend/views/list.ejs"));
+  res.render(path.resolve(__dirname + "/../frontend/views/list"));
+});
+
+app.get("/category/:categoryName", (req, res) => {
+  res.render(path.resolve(__dirname + "/../frontend/views/list"));
 });
 
 const port = 3000;

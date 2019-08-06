@@ -39,8 +39,6 @@ hamburger.addEventListener("click", () => {
   toogleSidebar();
 });
 
-//TODO AUTOFOCUS WHEN OPENING/CREATING NOTE
-
 function toogleSidebar() {
   if (!isShrunk) {
     skrinkSidebar();
@@ -358,7 +356,7 @@ function toggleSelectedGroup(section) {
 }
 
 // Dynamically size textarea
-function autoGrow(element) {
-  element.style.height = "1px";
-  element.style.height = (25 + element.scrollHeight) + "px";
+function autoGrow(noteContent) {
+    noteContent.style.height = "1px";
+    noteContent.style.height = (25 + noteContent.scrollHeight) + "px";
 }
