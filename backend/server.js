@@ -26,9 +26,10 @@ mongoose.connect("mongodb://localhost:27017/notetakerDB", {
 });
 
 app.get("/", (req, res) => {
-  res.sendFile(path.resolve(__dirname + "/../frontend/index.html"));
+  res.render(path.resolve(__dirname + "/../frontend/views/list.ejs"));
 });
 
-app.listen(3000, function () {
-  console.log("Server started on port 3000");
+const port = 3000;
+app.listen(port, function () {
+  console.log(`Server started on port ${port}`);
 });
