@@ -53,7 +53,7 @@ function toogleSidebar() {
   function skrinkSidebar() {
     const main = document.querySelector("main");
     main.classList.add("increase-columns");
-    
+
     const background = document.querySelector(".bg");
     const tabs = document.querySelector(".tabs");
     const header = document.querySelector("header");
@@ -88,7 +88,7 @@ function toogleSidebar() {
     main.style.width = "1532px";
     tabs.style.width = "1443px";
     header.style.width = "1820px";
-    
+
     // TODO FIX SIDE SCROLL AND AWK JERK AND RESIZING
     main.style.transform = "translateX(" + (0) + "px)";
     tabs.style.transform = "translateX(" + (0) + "px)";
@@ -155,8 +155,14 @@ function createCaution(card) {
   document.querySelector("body").appendChild(caution);
 }
 
+
+/**
+ * Represents a pop-up window able to create note cards
+ * @param {event} e 
+ */
 function createNoteEditor(e) {
   const target = e.currentTarget || e.srcElement;
+
   // Create note elements
   const noteTitle = document.createElement("input");
   noteTitle.classList.add("note-title");
@@ -166,7 +172,11 @@ function createNoteEditor(e) {
   noteContent.classList.add("note-content");
   noteContent.value = target.querySelector(".card-content").innerText;
   noteContent.placeholder = "Take a note...";
-  noteContent.autofocus = true;
+
+  // Focus note content when the thread becomes idle
+  window.setTimeout(function () {
+    noteContent.focus();
+  }, 0);
 
   noteContent.addEventListener("keydown", () => {
     autoGrow(noteContent);
@@ -240,7 +250,11 @@ function createNoteCreator() {
   const noteContent = document.createElement("textarea");
   noteContent.classList.add("note-content");
   noteContent.placeholder = "Take a note...";
-  noteContent.autofocus = true;
+
+  // Focus note content when the thread becomes idle
+  window.setTimeout(function () {
+    noteContent.focus();
+  }, 0);
 
   noteContent.addEventListener("keydown", () => {
     autoGrow(noteContent);
@@ -315,7 +329,7 @@ function createNoteCard() {
   title.innerText = noteTitle.value;
   const content = document.createElement("div");
   content.classList.add("card-content");
-  const noteContent = document.querySelector(".note-content")
+  const noteContent = document.querySelector(".note-content");
   content.innerText = noteContent.value;
 
   listenCardEvents(card, closeImage);

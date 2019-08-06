@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const _ = require("lodash");
 const date = require(__dirname + "/date.js");
+const path = require("path");
 
 mongoose.set("useFindAndModify", false);
 
@@ -17,15 +18,15 @@ app.use(
     extended: true
   })
 );
-app.use(express.static("frontend/public"));
+
+app.use(express.static(path.resolve("../frontend")));
 
 mongoose.connect("mongodb://localhost:27017/notetakerDB", {
   useNewUrlParser: true
 });
 
 app.get("/", (req, res) => {
-  const path = require("path");
-  res.sendFile(path.resolve("__dirname + /../frontend/index.html"));
+  res.sendFile(path.resolve(__dirname + "/../frontend/index.html"));
 });
 
 app.listen(3000, function () {

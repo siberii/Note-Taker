@@ -282,7 +282,7 @@ header {
 }
 
 main {
-  width: 1532px;
+  width: 1536px;
 }
 
 .bg {
@@ -292,16 +292,16 @@ main {
   left: 50%;
   transform: translate(-37.5%, -50%);
   background-color: #f2f4f6;
-  
+
   height: 100vh;
   width: 1530px;
   /* z-index: -1; */
   pointer-events: none;
 
-  
+
 }
 
-.bg-image{
+.bg-image {
   position: absolute;
   height: 100vh;
   width: 100vw;
@@ -309,6 +309,7 @@ main {
   z-index: 0;
   pointer-events: none;
 }
+
 /* end of sidebar collapse */
 
 
