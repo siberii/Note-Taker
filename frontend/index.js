@@ -5,12 +5,10 @@ buttonTab.addEventListener("click", () => {
   createTab();
 });
 
-
 const buttonNote = document.querySelector(".btn-note-add");
 buttonNote.addEventListener("click", () => {
-  createNoteCreator();
+  createNoteGenerator();
 });
-
 
 const tabs = document.getElementsByClassName("tab");
 for (const tab of tabs) {
@@ -19,7 +17,6 @@ for (const tab of tabs) {
   });
 }
 
-
 const groups = document.getElementsByClassName("group");
 for (const group of groups) {
   group.addEventListener("click", () => {
@@ -27,17 +24,17 @@ for (const group of groups) {
   });
 }
 
-
 const cardNote = document.querySelector(".card");
 const closeNote = document.querySelector(".btn-close");
 listenCardEvents(cardNote, closeNote);
-
 
 const hamburger = document.querySelector("#hamburger");
 let isShrunk = false;
 hamburger.addEventListener("click", () => {
   toogleSidebar();
 });
+
+
 
 function toogleSidebar() {
   if (!isShrunk) {
@@ -155,21 +152,30 @@ function createCaution(card) {
 
 
 /**
- * Represents a pop-up window able to create note cards
+ * Represents a pop-up window able to edit note cards
  * @param {event} e 
  */
 function createNoteEditor(e) {
   const target = e.currentTarget || e.srcElement;
 
-  // Create note elements
+  // Create note editor elements
+  const form = document.createElement("form");
+  form.action = "";
+  form.method = "post";
+
   const noteTitle = document.createElement("input");
   noteTitle.classList.add("note-title");
   noteTitle.value = target.querySelector(".card-title").innerText;
+  noteTitle.name = "noteTitle";
   noteTitle.placeholder = "Title";
+  noteTitle.autocomplete = "off";
+
   const noteContent = document.createElement("textarea");
   noteContent.classList.add("note-content");
   noteContent.value = target.querySelector(".card-content").innerText;
+  noteContent.name = "noteContent";
   noteContent.placeholder = "Take a note...";
+  noteContent.autocomplete = "off";
 
   // Focus note content when the thread becomes idle
   window.setTimeout(function () {
@@ -186,7 +192,10 @@ function createNoteEditor(e) {
   const buttonCreatorNote = document.createElement("button");
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Save";
+  buttonCreatorNote.name = "buttonSaveNote";
+  buttonCreatorNote.type = "button";
   buttonCreatorNote.addEventListener("click", () => {
+    form.submit();
     target.querySelector(".card-title").innerText = noteTitle.value;
     target.querySelector(".card-content").innerText = noteContent.value;
     document.querySelector(".overlay-note-creator").remove();
@@ -197,6 +206,7 @@ function createNoteEditor(e) {
   const buttonCancel = document.createElement("button");
   buttonCancel.classList.add("btn-creator-cancel");
   buttonCancel.innerText = "Cancel";
+  buttonCancel.type = "button";
   buttonCancel.addEventListener("click", () => {
     document.querySelector(".overlay-note-creator").remove();
     removeBgBlur();
@@ -209,9 +219,10 @@ function createNoteEditor(e) {
 
   const overlayNoteCreator = document.createElement("div");
   overlayNoteCreator.classList.add("overlay-note-creator");
-  overlayNoteCreator.appendChild(noteTitle);
-  overlayNoteCreator.appendChild(noteContent);
-  overlayNoteCreator.appendChild(buttons);
+  form.appendChild(noteTitle);
+  form.appendChild(noteContent);
+  form.appendChild(buttons);
+  overlayNoteCreator.appendChild(form);
 
   addBgBlur();
 
@@ -239,15 +250,27 @@ function createTab() {
   sections.appendChild(div);
 }
 
-function createNoteCreator() {
-  // Create note elements
+/**
+ * Represents a pop-up window able to create note cards 
+ */
+function createNoteGenerator() {
+  // Create note generator elements
+  const form = document.createElement("form");
+  form.action = "";
+  form.method = "post";
+
   const noteTitle = document.createElement("input");
   noteTitle.classList.add("note-title");
   noteTitle.placeholder = "Title";
+  noteTitle.name = "noteTitle";
+  noteTitle.autocomplete = "off";
 
   const noteContent = document.createElement("textarea");
   noteContent.classList.add("note-content");
   noteContent.placeholder = "Take a note...";
+  noteContent.name = "noteContent";
+  noteContent.autocomplete = "off";
+
 
   // Focus note content when the thread becomes idle
   window.setTimeout(function () {
@@ -261,15 +284,20 @@ function createNoteCreator() {
   const buttons = document.createElement("div");
   buttons.classList.add("overlay-buttons");
 
-
   const buttonCreatorNote = document.createElement("button");
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Add note";
-
+  buttonCreatorNote.name = "buttonAddNote";
+  buttonCreatorNote.type = "button";
+  // Form submit post when adding a node card
+  buttonCreatorNote.addEventListener("click", () => {
+    form.submit();
+  });
 
   const buttonCancel = document.createElement("button");
   buttonCancel.classList.add("btn-creator-cancel");
   buttonCancel.innerText = "Cancel";
+  buttonCancel.type = "button";
 
   listenAddCancelButton(buttonCreatorNote, buttonCancel);
 
@@ -279,9 +307,10 @@ function createNoteCreator() {
 
   const overlayNoteCreator = document.createElement("div");
   overlayNoteCreator.classList.add("overlay-note-creator");
-  overlayNoteCreator.appendChild(noteTitle);
-  overlayNoteCreator.appendChild(noteContent);
-  overlayNoteCreator.appendChild(buttons);
+  form.appendChild(noteTitle);
+  form.appendChild(noteContent);
+  form.appendChild(buttons);
+  overlayNoteCreator.appendChild(form);
 
   addBgBlur();
 
@@ -291,7 +320,7 @@ function createNoteCreator() {
 
 function listenAddCancelButton(buttonCreatorNote, buttonCancel) {
   buttonCreatorNote.addEventListener("click", () => {
-    createNoteCard();
+    generateNoteCard();
     removeBgBlur();
   });
   buttonCancel.addEventListener("click", () => {
@@ -306,7 +335,10 @@ function addBgBlur() {
   bgBlur.classList.add("bg-blur-front");
 }
 
-function createNoteCard() {
+/**
+ * Generate note card
+ */
+function generateNoteCard() {
   const card = document.createElement("div");
   card.classList.add("card");
 
@@ -320,7 +352,7 @@ function createNoteCard() {
 
   const date = document.createElement("div");
   date.classList.add("card-date");
-  date.innerText = "July 26, 2019";
+  date.innerHTML = "July 26, 2019";
   const title = document.createElement("div");
   title.classList.add("card-title");
   const noteTitle = document.querySelector(".note-title");
@@ -357,6 +389,6 @@ function toggleSelectedGroup(section) {
 
 // Dynamically size textarea
 function autoGrow(noteContent) {
-    noteContent.style.height = "1px";
-    noteContent.style.height = (25 + noteContent.scrollHeight) + "px";
+  noteContent.style.height = "1px";
+  noteContent.style.height = (25 + noteContent.scrollHeight) + "px";
 }
