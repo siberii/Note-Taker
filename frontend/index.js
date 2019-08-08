@@ -10,10 +10,13 @@ buttonNote.addEventListener("click", () => {
   createNoteGenerator();
 });
 
+const firstTab = document.querySelector(".tab");
+firstTab.classList.add("tab-selected");
 const tabs = document.getElementsByClassName("tab");
 for (const tab of tabs) {
   tab.addEventListener("click", () => {
     toggleSelectedTab(tab);
+    document.querySelector(".form-tab").submit();
   });
 }
 

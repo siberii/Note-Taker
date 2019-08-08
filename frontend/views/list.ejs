@@ -1,7 +1,5 @@
 <%- include("partials/header") -%>
 
-
-
 <aside class="left-wrapper">
   <div class="top-corner-bar">
     <img src="public/images/hamburger.svg" alt="hamburger" id="hamburger">
@@ -9,22 +7,27 @@
       <img src="public/images/brand-logo-2.svg" alt="brand-logo" class="brand-logo">
     </a>
   </div>
+
   <div id="overview" class="group" onclick="location.href='/category/overview'">
     <img src="public/images/overview-tiles.svg" alt="overview-tiles" class="side-icon">
     <div class="side-title">Overview</div>
   </div>
+
   <div id="notes" class="group group-selected" onclick="location.href='/category/notes';">
     <img src="public/images/notes-pen.svg" alt="notes-pen" class="side-icon">
     <div class="side-title">Notes</div>
   </div>
+
   <div id="tasks" class="group" onclick="location.href='/category/tasks';">
     <img src="public/images/tasks-checks.svg" alt="tasks-checks" class="side-icon">
     <div class="side-title">Tasks</div>
   </div>
-  <div id="archives" class="group" onclick="location.href='/category/archives';">
+
+  <div id="archives" class="group" onclick="location.href='/category/archives'">
     <img src="public/images/archives-bin.svg" alt="archives" class="side-icon">
     <div class="side-title">Archives</div>
   </div>
+
 </aside>
 <header>
   <img src="public/images/magnify-glass.svg" alt="magnifying-glass" id="search-img">
@@ -32,26 +35,28 @@
 </header>
 <div class="bg"></div>
 <div class="tabs">
-  <div class="sections">
-    <div class="tab tab-selected">All</div>
-    <div class="tab">Project</div>
-    <div class="tab">Business</div>
-  </div>
+  <form class="form-tab" action="" method="post">
+    <div class="sections">
+      <% tabs.forEach(tab=>{ %>
+      <button type=submit class="tab" name="buttonTab" value="<%=tab.name%>"> <%=tab.name%> </button>
+      <%})%>
+    </div>
+  </form>
   <button class="btn-tab-add"><img src="public/images/plus-icon-rounded.svg" alt="plus icon"></button>
 </div>
 <button class="btn-note-add">Add Note</button>
 <div class="bg-image"></div>
 
 <main>
+  <% currentTab.items.forEach(card=>{ %>
   <div class="card">
     <div class="card-close"><img src="public/images/close-btn.svg" alt="close button" class="btn-close"></div>
-    <div class="card-date"> <%= day %> </div>
-    <div class="card-title">Prep Team Meeting</div>
-    <div class="card-content">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto sunt
-      suscipit
-      eligendi in officia dolor ipsum aperiam laboriosam molestias, at amet qui deleniti a, quod quia, soluta
-      exercitationem illum corrupti dolore.</div>
+    <div class="card-date"> <%=card.date%> </div>
+    <div class="card-title"> <%=card.title%> </div>
+    <div class="card-content"> <%=card.content%> </div>
   </div>
+  <%})%>
+
 </main>
 
 

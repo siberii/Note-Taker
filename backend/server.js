@@ -30,14 +30,14 @@ mongoose.connect("mongodb://localhost:27017/notetakerDB", {
 
 
 // Note card schema
-const notesSchema = new mongoose.Schema({
+const noteSchema = new mongoose.Schema({
   date: String,
   title: String,
   content: String
 });
 
 // Collection of note cards (model)
-const Note = mongoose.model("Item", notesSchema);
+const Note = mongoose.model("Item", noteSchema);
 
 const initialNote = new Note({
   date: day,
@@ -50,13 +50,13 @@ const initialNote = new Note({
 const notes = [initialNote];
 
 // Tabs schema
-const tabsSchema = mongoose.Schema({
+const tabSchema = mongoose.Schema({
   name: String,
-  items: [notesSchema]
+  items: [noteSchema]
 });
 
 // Collection of tabs (model)
-const Tab = mongoose.model("Tab", tabsSchema);
+const Tab = mongoose.model("Tab", tabSchema);
 
 const allTab = new Tab({
   name: "All",
@@ -73,71 +73,131 @@ const projectTab = new Tab({
   items: []
 });
 
+const archivesTab = new Tab({
+  name: "Archives",
+  items: []
+});
+
 // List of initial tabs
 const tabs = [allTab, businessTab, projectTab];
 
 
 // Tabs schema
-const categoriesSchema = mongoose.Schema({
+const categorySchema = mongoose.Schema({
   name: String,
-  tabs: [tabsSchema]
+  tabs: [tabSchema],
+  currentTab: tabSchema
 });
 
 // Collection of tabs (model)
-const Category = mongoose.model("Category", categoriesSchema);
+const Category = mongoose.model("Category", categorySchema);
 
 const overviewCategory = new Category({
   name: "Overview",
-  tabs: [allTab]
+  tabs: [allTab],
+  currentTab: allTab
 });
 
 const notesCategory = new Category({
   name: "Notes",
-  tabs: tabs
+  tabs: tabs,
+  currentTab: allTab
 });
 
 const tasksCategory = new Category({
   name: "Tasks",
-  tabs: [projectTab]
+  tabs: [projectTab],
+  currentTab: allTab
 });
 
 const archivesCategory = new Category({
   name: "Archives",
-  tabs: []
+  tabs: [archivesTab],
+  currentTab: archivesTab
 });
 
 // List of initial tabs
 const categories = [overviewCategory, notesCategory, tasksCategory, archivesCategory];
 
+Category.find({}, (err, foundCategories) => {
+  // Add category to its collection if empty
+  if (foundCategories.length === 0) {
+    Category.insertMany(categories, err => {
+      if (err)
+        console.log(err + ": Cannot insert categories" + foundCategories);
+      else
+        console.log("Categories succesfully inserted! " + foundCategories);
+    });
+  }
+});
 
 // TODO: DO THE INITIAL SETUP (EMPTY COLLECTIONS)
+let currentCategory = notesCategory;
 
 app.get("/", (req, res) => {
-  
-  Category.find({}, (err, foundCategories) => {
-    // Add defaut tabs to its collection if empty
-    if (foundCategories.length === 0) {
-        Category.insertMany(categories, err => {
-          if (err) console.log(err + ": Cannot insert categories" + foundCategories);
-          else console.log("Categories succesfully inserted! " + foundCategories);
+  res.redirect("/category/notes");
+});
+
+app.get("/category/:categoryName", (req, res) => {
+  const categoryName = _.capitalize(req.params.categoryName);
+
+  Category.findOne({
+    name: categoryName
+  }, (err, foundCategory) => {
+    if (!err && foundCategory) {
+      if (currentCategory === foundCategory) {
+        currentCategory = foundCategory;
+        res.render(path.resolve(__dirname + "/../frontend/views/list"), {
+          tabs: foundCategory.tabs,
+          currentTab: foundCategory.currentTab
         });
+      } else {
+        res.render(path.resolve(__dirname + "/../frontend/views/list"), {
+          tabs: foundCategory.tabs,
+          currentTab: foundCategory.currentTab
+        });
+      }
     } else {
-      res.render(path.resolve(__dirname + "/../frontend/views/list"), {
-        day: day,
-        foundCategories: foundCategories
-      });
+      console.log("Error status: " + err + "\nFound Category is " + foundCategory);
     }
   });
 });
 
-app.get("/category/:categoryName", (req, res) => {
-  res.render(path.resolve(__dirname + "/../frontend/views/list"), {
-    day: day
-  });
-});
-
 app.post("/category/:categoryName", (req, res) => {
-  res.send(req.body);
+  currentTabName = req.body.buttonTab;
+  const categoryName = _.capitalize(req.params.categoryName);
+  
+  if (currentTabName) {
+    Category.findOne({
+      name: categoryName
+    }, (err, foundCategory) => {
+      if (!err) {
+        category = foundCategory;
+        console.log("Successfully found category");
+        foundCategory.tabs.forEach(tab => {
+          if (tab.name === currentTabName) {
+            // Query Category to find a category by name and update its current tab
+            Category.findOneAndUpdate({
+                name: categoryName
+              }, {
+                $set: {
+                  currentTab: tab
+                }
+              },
+              (err) => {
+                if (!err)
+                  console.log("Successfully found category and updated its current tab!");
+                else
+                  console.log(err + ": Failed to find category and update its current tab!");
+              }
+            );
+          }
+        });
+      } else
+        console.log(err + ": Failed to find category");
+    });
+  }
+  res.redirect("/category/" + req.params.categoryName);
 });
 
 app.post("/", (req, res) => {
