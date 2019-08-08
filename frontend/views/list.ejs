@@ -38,7 +38,11 @@
   <form class="form-tab" action="" method="post">
     <div class="sections">
       <% tabs.forEach(tab=>{ %>
+      <% if(currentTab.name === tab.name){%>
+      <button type=submit class="tab tab-selected" name="buttonTab" value="<%=tab.name%>"> <%=tab.name%> </button>
+      <% }else{%>
       <button type=submit class="tab" name="buttonTab" value="<%=tab.name%>"> <%=tab.name%> </button>
+      <% }%>
       <%})%>
     </div>
   </form>

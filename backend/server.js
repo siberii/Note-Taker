@@ -166,14 +166,13 @@ app.get("/category/:categoryName", (req, res) => {
 app.post("/category/:categoryName", (req, res) => {
   currentTabName = req.body.buttonTab;
   const categoryName = _.capitalize(req.params.categoryName);
-  
+
   if (currentTabName) {
     Category.findOne({
       name: categoryName
     }, (err, foundCategory) => {
       if (!err) {
         category = foundCategory;
-        console.log("Successfully found category");
         foundCategory.tabs.forEach(tab => {
           if (tab.name === currentTabName) {
             // Query Category to find a category by name and update its current tab

@@ -10,12 +10,10 @@ buttonNote.addEventListener("click", () => {
   createNoteGenerator();
 });
 
-const firstTab = document.querySelector(".tab");
-firstTab.classList.add("tab-selected");
+
 const tabs = document.getElementsByClassName("tab");
 for (const tab of tabs) {
   tab.addEventListener("click", () => {
-    toggleSelectedTab(tab);
     document.querySelector(".form-tab").submit();
   });
 }
@@ -382,12 +380,6 @@ function toggleSelectedTab(tab) {
   const selectedTab = document.querySelector(".tab-selected");
   selectedTab.classList.toggle("tab-selected");
   tab.classList.toggle("tab-selected");
-}
-
-function toggleSelectedGroup(section) {
-  const selectedGroup = document.querySelector(".group-selected");
-  selectedGroup.classList.toggle("group-selected");
-  section.classList.toggle("group-selected");
 }
 
 // Dynamically size textarea
