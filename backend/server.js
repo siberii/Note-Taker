@@ -145,18 +145,12 @@ app.get("/category/:categoryName", (req, res) => {
     name: categoryName
   }, (err, foundCategory) => {
     if (!err && foundCategory) {
-      if (currentCategory === foundCategory) {
-        currentCategory = foundCategory;
-        res.render(path.resolve(__dirname + "/../frontend/views/list"), {
-          tabs: foundCategory.tabs,
-          currentTab: foundCategory.currentTab
-        });
-      } else {
-        res.render(path.resolve(__dirname + "/../frontend/views/list"), {
-          tabs: foundCategory.tabs,
-          currentTab: foundCategory.currentTab
-        });
-      }
+      currentCategory = foundCategory;
+      res.render(path.resolve(__dirname + "/../frontend/views/list"), {
+        currentCategory: currentCategory.name,
+        tabs: foundCategory.tabs,
+        currentTab: foundCategory.currentTab
+      });
     } else {
       console.log("Error status: " + err + "\nFound Category is " + foundCategory);
     }
