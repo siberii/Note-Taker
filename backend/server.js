@@ -158,9 +158,11 @@ app.get("/category/:categoryName", (req, res) => {
 });
 
 app.post("/category/:categoryName", (req, res) => {
+
   currentTabName = req.body.buttonTab;
   const categoryName = _.capitalize(req.params.categoryName);
 
+  // Change tab post
   if (currentTabName) {
     Category.findOne({
       name: categoryName
@@ -188,6 +190,33 @@ app.post("/category/:categoryName", (req, res) => {
         });
       } else
         console.log(err + ": Failed to find category");
+    });
+  }
+
+  // Add note card to currentTab
+  if (req.body.inputAddNote) {
+    const newlyAddedNote = req.body;
+
+    const newItem = new Note({
+      date: day,
+      title: newlyAddedNote.noteTitle,
+      content: newlyAddedNote.noteContent
+    });
+
+    // Query Category to find current category by name and push new note card
+    Category.findOne({
+      _id: currentCategory
+    }, (err, foundCategory) => {
+      if (!err) {
+        const currentTab = foundCategory.tabs.find(tab => foundCategory.currentTab.name === tab.name);
+
+        currentTab.items.push(newItem);
+        foundCategory.currentTab = currentTab;
+        foundCategory.save();
+        console.log("Succesfully added new note!");
+      } else {
+        console.log(err);
+      }
     });
   }
   res.redirect("/category/" + req.params.categoryName);

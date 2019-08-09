@@ -25,9 +25,9 @@ for (const group of groups) {
   });
 }
 
-const cardNote = document.querySelector(".card");
-const closeNote = document.querySelector(".btn-close");
-listenCardEvents(cardNote, closeNote);
+const cardNotes = document.querySelectorAll(".card");
+const closeNotes = document.querySelectorAll(".btn-close");
+listenCardEvents(cardNotes, closeNotes);
 
 const hamburger = document.querySelector("#hamburger");
 let isShrunk = false;
@@ -96,20 +96,33 @@ function toogleSidebar() {
   }
 }
 
-function listenCardEvents(cardNote, closeNote) {
-  cardNote.addEventListener("click", (e) => {
-    createNoteEditor(e);
-  });
-  cardNote.addEventListener("mouseover", () => {
-    closeNote.classList.add("appear");
-  });
-  cardNote.addEventListener("mouseout", () => {
-    closeNote.classList.remove("appear");
-  });
-  closeNote.addEventListener("click", (e) => {
-    e.stopPropagation();
-    createCaution(e.target.parentElement.parentElement);
-  });
+function listenCardEvents(cardNotes, closeNotes) {
+  for (const cardNote of cardNotes) {
+    cardNote.addEventListener("click", (e) => {
+      createNoteEditor(e);
+    });
+    cardNote.addEventListener("mouseover", (e) => {
+
+      if (e.target.querySelector(".btn-close"))
+        e.target.querySelector(".btn-close").classList.add("appear");
+      else
+        e.target.parentElement.querySelector(".btn-close").classList.add("appear");
+
+    });
+    cardNote.addEventListener("mouseout", (e) => {
+      if (e.target.querySelector(".btn-close"))
+        e.target.querySelector(".btn-close").classList.remove("appear");
+      else
+        e.target.parentElement.querySelector(".btn-close").classList.remove("appear");
+    });
+  }
+
+  for (const closeNote of closeNotes) {
+    closeNote.addEventListener("click", (e) => {
+      e.stopPropagation();
+      createCaution(e.target.parentElement.parentElement);
+    });
+  }
 }
 
 function createCaution(card) {
@@ -257,6 +270,7 @@ function createTab() {
 function createNoteGenerator() {
   // Create note generator elements
   const form = document.createElement("form");
+  form.classList.add("form-note-add");
   form.action = "";
   form.method = "post";
 
@@ -285,14 +299,20 @@ function createNoteGenerator() {
   const buttons = document.createElement("div");
   buttons.classList.add("overlay-buttons");
 
+  const inputAddNote = document.createElement("input");
+  inputAddNote.type = "hidden";
+  inputAddNote.name = "inputAddNote";
+  inputAddNote.value = "AddNote";
+
   const buttonCreatorNote = document.createElement("button");
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Add note";
+  buttonCreatorNote.type = "submit";
   buttonCreatorNote.name = "buttonAddNote";
-  buttonCreatorNote.type = "button";
+  buttonCreatorNote.value = "AddNote";
   // Form submit post when adding a node card
   buttonCreatorNote.addEventListener("click", () => {
-    form.submit();
+    document.querySelector(".form-note-add").submit();
   });
 
   const buttonCancel = document.createElement("button");
@@ -311,6 +331,7 @@ function createNoteGenerator() {
   form.appendChild(noteTitle);
   form.appendChild(noteContent);
   form.appendChild(buttons);
+  form.appendChild(inputAddNote);
   overlayNoteCreator.appendChild(form);
 
   addBgBlur();
