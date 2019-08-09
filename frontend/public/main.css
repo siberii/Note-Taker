@@ -186,7 +186,7 @@ header {
 .tab {
   background-color: #f2f4f6;
   font-family: "Open Sans", sans-serif;
-  font-size: 16px;
+  font-size: 18px;
   border: none;
   background-color: none;
   cursor: pointer;
@@ -267,7 +267,7 @@ main {
   grid-template-columns: repeat(4, 1fr);
   grid-auto-rows: 39%;
   grid-gap: 21px;
-  padding: 10px 46px 20px 50px;
+  padding: 15px 46px 20px 50px;
   overflow: auto;
   margin-bottom: 20px;
   z-index: 1;
@@ -358,12 +358,21 @@ main {
   box-shadow: 1px 3px 6px 1.3px rgba(0, 0, 0, 0.13);
 }
 
+.card-close{
+  display: block;
+  border: none;
+  margin-left: auto;
+  background-color: #fff;
+  outline: none;
+}
+
 .btn-close {
   display: block;
   margin-left: auto;
   transform: translate(80%, 43%);
   opacity: 0;
   transition: opacity 0.3s ease-in;
+  outline: none;
 }
 
 .btn-close:hover {

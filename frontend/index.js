@@ -133,13 +133,25 @@ function createCaution(card) {
   cautionMsg.classList.add("caution-msg");
   cautionMsg.innerHTML = "Are you sure you want to <b>delete</b> this note?";
 
+  const form = document.createElement("form");
+  form.classList.add("form-delete-note");
+  const currentCategory = document.querySelector(".tab-selected").value;
+  form.action = "/category/:" + currentCategory + "/delete";
+  form.method = "post";
+
   const buttonCaution = document.createElement("div");
   buttonCaution.classList.add("btn-caution");
 
   const buttonYes = document.createElement("button");
   buttonYes.classList.add("btn-caution-yes");
   buttonYes.innerText = "Yes";
-  buttonYes.addEventListener("click", () => {
+  buttonYes.type = "submit";
+  buttonYes.name = "buttonYes";
+  buttonYes.value = "deleteNote";
+  buttonYes.addEventListener("click", (e) => {
+    console.log(e.target.parentElement.parentElement);
+    
+    e.target.parentElement.parentElement.querySelector(".form-delete-note").submit();
     card.remove();
     caution.remove();
     removeBgBlur();
@@ -148,6 +160,7 @@ function createCaution(card) {
   const buttonNo = document.createElement("button");
   buttonNo.classList.add("btn-caution-no");
   buttonNo.innerText = "No";
+  buttonNo.type = "submit";
   buttonNo.addEventListener("click", () => {
     caution.remove();
     removeBgBlur();
@@ -156,8 +169,9 @@ function createCaution(card) {
   buttonCaution.appendChild(buttonYes);
   buttonCaution.appendChild(buttonNo);
 
-  caution.appendChild(cautionMsg);
-  caution.appendChild(buttonCaution);
+  form.appendChild(cautionMsg);
+  form.appendChild(buttonCaution);
+  caution.appendChild(form);
 
   addBgBlur();
 
@@ -207,7 +221,7 @@ function createNoteEditor(e) {
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Save";
   buttonCreatorNote.name = "buttonSaveNote";
-  buttonCreatorNote.type = "button";
+  buttonCreatorNote.type = "submit";
   buttonCreatorNote.addEventListener("click", () => {
     form.submit();
     target.querySelector(".card-title").innerText = noteTitle.value;

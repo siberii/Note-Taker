@@ -131,7 +131,6 @@ Category.find({}, (err, foundCategories) => {
   }
 });
 
-// TODO: DO THE INITIAL SETUP (EMPTY COLLECTIONS)
 let currentCategory = notesCategory;
 
 app.get("/", (req, res) => {
@@ -145,6 +144,7 @@ app.get("/category/:categoryName", (req, res) => {
     name: categoryName
   }, (err, foundCategory) => {
     if (!err && foundCategory) {
+      // Sets the working category
       currentCategory = foundCategory;
       res.render(path.resolve(__dirname + "/../frontend/views/list"), {
         currentCategory: currentCategory.name,
@@ -171,7 +171,7 @@ app.post("/category/:categoryName", (req, res) => {
         category = foundCategory;
         foundCategory.tabs.forEach(tab => {
           if (tab.name === currentTabName) {
-            // Query Category to find a category by name and update its current tab
+            // Query Category collection : find a category and update its current tab
             Category.findOneAndUpdate({
                 name: categoryName
               }, {
@@ -195,12 +195,11 @@ app.post("/category/:categoryName", (req, res) => {
 
   // Add note card to currentTab
   if (req.body.inputAddNote) {
-    const newlyAddedNote = req.body;
 
     const newItem = new Note({
       date: day,
-      title: newlyAddedNote.noteTitle,
-      content: newlyAddedNote.noteContent
+      title: req.body.noteTitle,
+      content: req.body.noteContent
     });
 
     // Query Category to find current category by name and push new note card
@@ -208,11 +207,14 @@ app.post("/category/:categoryName", (req, res) => {
       _id: currentCategory
     }, (err, foundCategory) => {
       if (!err) {
-        const currentTab = foundCategory.tabs.find(tab => foundCategory.currentTab.name === tab.name);
+        const currentTab = foundCategory.tabs.find(tab => {
+          return foundCategory.currentTab.name === tab.name;
+        });
 
         currentTab.items.push(newItem);
         foundCategory.currentTab = currentTab;
         foundCategory.save();
+
         console.log("Succesfully added new note!");
       } else {
         console.log(err);
@@ -220,6 +222,43 @@ app.post("/category/:categoryName", (req, res) => {
     });
   }
   res.redirect("/category/" + req.params.categoryName);
+});
+
+let itemID;
+app.post("/category/:categoryName/delete", (req, res) => {
+  // Retrieve targeted item's ID
+  if (req.body.itemID) {
+    itemID = req.body.itemID;
+    return;
+  }
+
+  // Delete note when "deleteNote" post request is sent
+  if (req.body.buttonYes === "deleteNote") {
+    Category.findOne({
+      _id: currentCategory
+    }, (err, foundCategory) => {
+      if (!err) {
+        const currentTab = foundCategory.tabs.find(tab => {
+          return foundCategory.currentTab.name === tab.name;
+        });
+        // Remove targeted item
+        const itemIndex = currentTab.items.findIndex(item => {
+          return item._id.toString() === itemID;
+        });
+
+        if (itemIndex > -1) {
+          currentTab.items.splice(itemIndex, 1);
+          foundCategory.currentTab = currentTab;
+          foundCategory.save();
+          console.log("Succesfully removed note _id: " + itemID + " from " + foundCategory.name + "!");
+        }
+        console.log("Failed to splice items. itemIndex: " + itemIndex);
+      } else {
+        console.log(err + " Failed to remove note _id: " + itemID);
+      }
+    });
+  }
+  res.redirect("/category/" + currentCategory.name);
 });
 
 app.post("/", (req, res) => {
