@@ -98,9 +98,12 @@ function toogleSidebar() {
 
 function listenCardEvents(cardNotes, closeNotes) {
   for (const cardNote of cardNotes) {
+    
     cardNote.addEventListener("click", (e) => {
-      createNoteEditor(e);
+      createNoteEditor(e.currentTarget);
+      e.currentTarget.querySelector(".form-send-id").submit();
     });
+
     cardNote.addEventListener("mouseover", (e) => {
 
       if (e.target.querySelector(".btn-close"))
@@ -136,7 +139,7 @@ function createCaution(card) {
   const form = document.createElement("form");
   form.classList.add("form-delete-note");
   const currentCategory = document.querySelector(".tab-selected").value;
-  form.action = "/category/:" + currentCategory + "/delete";
+  form.action = "/category/:" + currentCategory + "/update";
   form.method = "post";
 
   const buttonCaution = document.createElement("div");
@@ -150,7 +153,7 @@ function createCaution(card) {
   buttonYes.value = "deleteNote";
   buttonYes.addEventListener("click", (e) => {
     console.log(e.target.parentElement.parentElement);
-    
+
     e.target.parentElement.parentElement.querySelector(".form-delete-note").submit();
     card.remove();
     caution.remove();
@@ -184,11 +187,12 @@ function createCaution(card) {
  * @param {event} e 
  */
 function createNoteEditor(e) {
-  const target = e.currentTarget || e.srcElement;
-
+  const target = e || e.srcElement;
   // Create note editor elements
   const form = document.createElement("form");
-  form.action = "";
+  form.classList.add("form-update-note");
+  const currentCategory = document.querySelector(".tab-selected").value;
+  form.action = "/category/:" + currentCategory + "/update";
   form.method = "post";
 
   const noteTitle = document.createElement("input");
@@ -221,9 +225,10 @@ function createNoteEditor(e) {
   buttonCreatorNote.classList.add("btn-creator-add-note");
   buttonCreatorNote.innerText = "Save";
   buttonCreatorNote.name = "buttonSaveNote";
+  buttonCreatorNote.value = "saveChanges";
   buttonCreatorNote.type = "submit";
-  buttonCreatorNote.addEventListener("click", () => {
-    form.submit();
+  buttonCreatorNote.addEventListener("click", (e) => {
+    e.target.parentElement.parentElement.querySelector(".form-update-note").submit();
     target.querySelector(".card-title").innerText = noteTitle.value;
     target.querySelector(".card-content").innerText = noteContent.value;
     document.querySelector(".overlay-note-creator").remove();

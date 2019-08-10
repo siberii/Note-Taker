@@ -69,13 +69,13 @@
   <main>
     <% currentTab.items.forEach(card=>{ %>
     <div class="card">
-      <form class="form-send-id" action="/category/<%=currentCategory%>/delete" method="post">
+      <form class="form-send-id" action="/category/<%=currentCategory%>/update" method="post">
         <button class="card-close"><img src="public/images/close-btn.svg" alt="close button" class="btn-close"></button>
         <input type="hidden" name="itemID" value="<%=card._id%>">
+        <div class="card-date"> <%=card.date%> </div>
+        <div class="card-title"> <%=card.title%> </div>
+        <div class="card-content"> <%=card.content%> </div>
       </form>
-      <div class="card-date"> <%=card.date%> </div>
-      <div class="card-title"> <%=card.title%> </div>
-      <div class="card-content"> <%=card.content%> </div>
     </div>
     <%})%>
 

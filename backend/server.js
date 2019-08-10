@@ -225,7 +225,7 @@ app.post("/category/:categoryName", (req, res) => {
 });
 
 let itemID;
-app.post("/category/:categoryName/delete", (req, res) => {
+app.post("/category/:categoryName/update", (req, res) => {
   // Retrieve targeted item's ID
   if (req.body.itemID) {
     itemID = req.body.itemID;
@@ -233,7 +233,7 @@ app.post("/category/:categoryName/delete", (req, res) => {
   }
 
   // Delete note when "deleteNote" post request is sent
-  if (req.body.buttonYes === "deleteNote") {
+  else if (req.body.buttonYes === "deleteNote") {
     Category.findOne({
       _id: currentCategory
     }, (err, foundCategory) => {
@@ -248,16 +248,47 @@ app.post("/category/:categoryName/delete", (req, res) => {
 
         if (itemIndex > -1) {
           currentTab.items.splice(itemIndex, 1);
+          //Update currentTab
           foundCategory.currentTab = currentTab;
           foundCategory.save();
           console.log("Succesfully removed note _id: " + itemID + " from " + foundCategory.name + "!");
         }
-        console.log("Failed to splice items. itemIndex: " + itemIndex);
+        console.log("Failed to splice item. itemIndex: " + itemIndex);
+      } else {
+        console.log(err + " Failed to remove note _id: " + itemID);
+      }
+    });
+  } else if (req.body.buttonSaveNote === "saveChanges") {
+    Category.findOne({
+      _id: currentCategory
+    }, (err, foundCategory) => {
+      if (!err) {
+        const currentTab = foundCategory.tabs.find(tab => {
+          return foundCategory.currentTab.name === tab.name;
+        });
+        // Update targeted item
+        const itemIndex = currentTab.items.findIndex(item => {
+          console.log(req.body.itemID);
+          console.log(item._id.toString());
+
+          return item._id.toString() === itemID;
+        });
+
+        if (itemIndex > -1) {
+          currentTab.items[itemIndex].title = req.body.noteTitle;
+          currentTab.items[itemIndex].content = req.body.noteContent;
+          //Update currentTab
+          foundCategory.currentTab = currentTab;
+          foundCategory.save();
+          console.log("Succesfully removed note _id: " + itemID + " from " + foundCategory.name + "!");
+        }
+        console.log("Failed to update item. itemIndex: " + itemIndex);
       } else {
         console.log(err + " Failed to remove note _id: " + itemID);
       }
     });
   }
+
   res.redirect("/category/" + currentCategory.name);
 });
 
