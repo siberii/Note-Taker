@@ -19,8 +19,8 @@ app.use(
   })
 );
 
-app.use(express.static(path.resolve("../frontend")));
-app.use("/category", express.static(path.resolve("../frontend")));
+app.use(express.static(path.resolve("frontend")));
+app.use("/category", express.static(path.resolve("frontend")));
 
 const day = date.getDate();
 
@@ -134,7 +134,7 @@ Category.find({}, (err, foundCategories) => {
 let currentCategory = notesCategory;
 
 app.get("/", (req, res) => {
-  res.render(path.resolve(__dirname + "/../frontend/views/landing.ejs"));
+  res.render(path.resolve(__dirname + "/frontend/views/landing.ejs"));
 });
 
 app.post("/", (req, res) => {
@@ -151,7 +151,7 @@ app.get("/category/:categoryName", (req, res) => {
     if (!err && foundCategory) {
       // Sets the working category
       currentCategory = foundCategory;
-      res.render(path.resolve(__dirname + "/../frontend/views/list"), {
+      res.render(path.resolve(__dirname + "/frontend/views/list"), {
         currentCategory: currentCategory.name,
         tabs: foundCategory.tabs,
         currentTab: foundCategory.currentTab
