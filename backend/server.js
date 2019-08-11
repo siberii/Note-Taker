@@ -24,7 +24,7 @@ app.use("/category", express.static(path.resolve("../frontend")));
 
 const day = date.getDate();
 
-mongoose.connect("mongodb://localhost:27017/notetakerDB", {
+mongoose.connect("mongodb+srv://admin-siberi:BigCluster95-@cluster0-8w1vs.mongodb.net/notetakerDB", {
   useNewUrlParser: true
 });
 
@@ -134,7 +134,7 @@ Category.find({}, (err, foundCategories) => {
 let currentCategory = notesCategory;
 
 app.get("/", (req, res) => {
-  res.render(path.resolve(__dirname + "/../frontend/views/landing"));
+  res.render(path.resolve(__dirname + "/../frontend/views/landing.ejs"));
 });
 
 app.post("/", (req, res) => {
@@ -162,6 +162,7 @@ app.get("/category/:categoryName", (req, res) => {
   });
 });
 
+// Change tab and add note
 app.post("/category/:categoryName", (req, res) => {
 
   currentTabName = req.body.buttonTab;
@@ -227,7 +228,9 @@ app.post("/category/:categoryName", (req, res) => {
       }
     });
   }
-  res.redirect("/category/" + req.params.categoryName);
+  setTimeout(() => {
+    res.redirect("/category/" + req.params.categoryName);
+  }, 500);
 });
 
 let itemID;
@@ -294,15 +297,20 @@ app.post("/category/:categoryName/update", (req, res) => {
       }
     });
   }
-
-  res.redirect("/category/" + currentCategory.name);
+  setTimeout(() => {
+    res.redirect("/category/" + currentCategory.name);
+  }, 500);
 });
 
 app.post("/", (req, res) => {
   res.send(req.body);
 });
 
-const port = 3000;
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+
 app.listen(port, function () {
-  console.log(`Server started on port ${port}`);
+  console.log("Server has started successfully.");
 });

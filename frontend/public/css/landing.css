@@ -1,5 +1,4 @@
 .landing {
-  z-index: -2;
   display: grid;
   height: 100vh;
   width: 100vw;
@@ -69,11 +68,15 @@
 
 }
 
-.btn-get-started:active{
+.btn-get-started:active {
   outline: none;
 }
 
-.btn-get-started:hover{
+.btn-get-started:focus {
+  outline: 0;
+}
+
+.btn-get-started:hover {
   background-color: rgb(196, 40, 87);
   -webkit-transform: scale(1.07, 1.07);
   transform: scale(1.07, 1.07);
@@ -167,7 +170,11 @@
   transform: scale(1.07, 1.07);
 }
 
-.btn-get-started2:active{
+.btn-get-started2:hover {
+  outline: none;
+}
+
+.btn-get-started2:active {
   outline: none;
 }
 

@@ -181,6 +181,9 @@ header {
   margin: 0px 30px 0px 30px;
   outline: none;
 }
+button:focus{
+  outline: none;
+}
 
 .tab {
   background-color: #f2f4f6;
