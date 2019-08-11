@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="189.367" height="38.714" viewBox="0 0 189.367 38.714">
-  <g id="Group_14" data-name="Group 14" transform="translate(-92 -35.011)">
-    <path id="note-list" d="M19.665,27.412H2.384A2.389,2.389,0,0,1,0,25.028V2.385A2.389,2.389,0,0,1,2.385,0H25.028a2.382,2.382,0,0,1,2.385,2.377V19.069l-7.151,8.343ZM1.192,7.151V25.03a1.189,1.189,0,0,0,1.2,1.19H19.069V20.268a2.377,2.377,0,0,1,2.381-2.391h4.77V7.151Zm0-1.192V2.382a1.184,1.184,0,0,1,1.19-1.19H25.03a1.2,1.2,0,0,1,1.19,1.2V5.959ZM20.261,25.625V20.272a1.2,1.2,0,0,1,1.188-1.2h4.414l-5.6,6.555ZM9.535,15.494v1.192h8.343V15.494ZM3.576,14.3v3.576H7.151V14.3Zm1.192,1.192v1.192H5.959V15.494Zm4.767-4.767v1.192h14.3V10.727ZM3.576,9.535V13.11H7.151V9.535Zm1.192,1.192v1.192H5.959V10.727Zm4.767,9.535v1.192h7.151V20.261ZM3.576,19.069v3.576H7.151V19.069Zm1.192,1.192v1.192H5.959V20.261Z" transform="translate(263.024 35.011) rotate(48)" fill="#fff" fill-rule="evenodd"/>
-    <text id="Note_Taker" data-name="Note Taker" transform="translate(92 64.156)" fill="#f2f4f6" font-size="25" font-family="OpenSans-Bold, Open Sans" font-weight="700"><tspan x="0" y="0">Note Taker</tspan></text>
-  </g>
-</svg>

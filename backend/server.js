@@ -134,7 +134,12 @@ Category.find({}, (err, foundCategories) => {
 let currentCategory = notesCategory;
 
 app.get("/", (req, res) => {
-  res.redirect("/category/notes");
+  res.render(path.resolve(__dirname + "/../frontend/views/landing"));
+});
+
+app.post("/", (req, res) => {
+  if (req.body.buttonGetStarted || req.body.buttonGetStarted2)
+    res.redirect("/category/notes");
 });
 
 app.get("/category/:categoryName", (req, res) => {
@@ -206,13 +211,14 @@ app.post("/category/:categoryName", (req, res) => {
     Category.findOne({
       _id: currentCategory
     }, (err, foundCategory) => {
-      if (!err) {
+      if (!err && foundCategory) {
         const currentTab = foundCategory.tabs.find(tab => {
           return foundCategory.currentTab.name === tab.name;
         });
 
         currentTab.items.push(newItem);
         foundCategory.currentTab = currentTab;
+        currentCategory = foundCategory;
         foundCategory.save();
 
         console.log("Succesfully added new note!");
