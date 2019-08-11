@@ -1,5 +1,5 @@
 # Note-Taker
-Note taking app create with the following technologies:
+Note taking app created with the following technologies:
 - HTML
 - CSS
 - JavaScript
