@@ -230,7 +230,7 @@ app.post("/category/:categoryName", (req, res) => {
   }
   setTimeout(() => {
     res.redirect("/category/" + req.params.categoryName);
-  }, 500);
+  }, 250);
 });
 
 let itemID;
@@ -299,7 +299,7 @@ app.post("/category/:categoryName/update", (req, res) => {
   }
   setTimeout(() => {
     res.redirect("/category/" + currentCategory.name);
-  }, 500);
+  }, 250);
 });
 
 app.post("/", (req, res) => {
