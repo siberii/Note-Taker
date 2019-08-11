@@ -24,7 +24,7 @@ app.use("/category", express.static(path.resolve("frontend")));
 
 const day = date.getDate();
 
-mongoose.connect("mongodb+srv://admin-siberi:BigCluster95-@cluster0-8w1vs.mongodb.net/notetakerDB", {
+mongoose.connect("mongodb://localhost:27017/notetakerDB", {
   useNewUrlParser: true
 });
 
